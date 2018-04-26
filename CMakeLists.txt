@@ -6,8 +6,10 @@ project(Ritual)
 find_package(Tcod REQUIRED)
 
 include_directories(${Tcod_INCLUDE_DIR})
+
 link_directories(${Tcod_LIB_DIR})
 
+include_directories(include)
 file(GLOB SOURCES source/*.cpp)
 
 add_executable(Ritual ${SOURCES})
