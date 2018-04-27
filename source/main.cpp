@@ -1,19 +1,13 @@
 #include <iostream>
-#include <random>
 #include <libtcod.hpp>
 
 #include "map.h"
+#include "map_generators/dungeon_map_generator.h"
 
 int main()
 {
-    std::unique_ptr<IMap> map = std::make_unique<Map>(50, 80);
-    std::unique_ptr<TCODRandom> rng = std::make_unique<TCODRandom>();
-    for(int i = 0; i < 30; ++i)
-    {
-        map->get_tile(rng->getInt(0, 49), rng->getInt(0, 79)) = Tile('#', false);
-    }
 
-
+    std::unique_ptr<IMap> map = DungeonMapGenerator().generate(50, 80);
 
 
     TCODConsole::initRoot(80,50,"Ritual roguelike game");
