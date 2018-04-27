@@ -1,4 +1,5 @@
 #include "map.h"
+#include <tile.h>
 
 Map::Map(size_t height, size_t width)
     : m_height(height)
@@ -10,7 +11,7 @@ Map::Map(size_t height, size_t width)
     {
         for(size_t j = 0; j < width; ++j)
         {
-            m_tiles.emplace_back(std::make_unique<Tile>('.', true));
+            m_tiles.emplace_back(std::make_unique<Tile>(Tile::WALL));
         }
     }
 }
