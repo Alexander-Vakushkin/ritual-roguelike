@@ -13,7 +13,7 @@ struct Room
     size_t width;
     size_t height;
 
-    bool contains(size_t x, size_t y)
+    bool contains(size_t x, size_t y) const
     {
         return (x >= upperLeftX)
             && (y >= upperLeftY)
@@ -30,7 +30,7 @@ struct Room
         }
 
         return contains(other.upperLeftX, other.upperLeftY)
-            || contains(other.upperLeftX, other.upperLeftY + other.height); 
+            || contains(other.upperLeftX, other.upperLeftY + other.height);
     }
 
 };
