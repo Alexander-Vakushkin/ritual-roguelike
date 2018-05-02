@@ -19,3 +19,33 @@ TEST(RoomTests, ContainsReturnsTrueForACornerPoint)
     Room r{0,0,3,4};
     EXPECT_TRUE(r.contains(0,0));
 }
+
+TEST(RoomTests, ContainsReturnsFalseForAPointOutsideTheRoom)
+{
+    Room r{0,0,3,4};
+    EXPECT_FALSE(r.contains(5,5));
+}
+
+TEST(RoomTests, OverlapsReturnsTrueForARoomInsideARoom)
+{
+    Room r{0,0,3,4};
+    EXPECT_TRUE(r.is_overlapping({1,1,1,1}));
+}
+
+TEST(RoomTests, OverlapsReturnsTrueForAPartiallyOverlappingRoom)
+{
+    Room r{0,0,3,4};
+    EXPECT_TRUE(r.is_overlapping({1,1,5,5}));
+}
+
+TEST(RoomTests, OverlapsReturnsTrueForRoomsSharingABorder)
+{
+    Room r{0,0,3,4};
+    EXPECT_TRUE(r.is_overlapping({3,0,5,5}));
+}
+
+TEST(RoomTests, OVerlapsReturnsTrueForRoomsSharingACorner)
+{
+    Room r{0,0,3,4};
+    EXPECT_TRUE(r.is_overlapping({3,4,5,5}));
+}
