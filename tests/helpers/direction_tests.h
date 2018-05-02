@@ -16,3 +16,9 @@ TEST(DirectionTests, TurnsAround)
 {
     EXPECT_EQ(CardinalDirection::WEST(), CardinalDirection::EAST().turn_around());
 }
+
+TEST(DirectionTests, TurnsAreReversible)
+{
+    EXPECT_EQ(CardinalDirection::WEST(), CardinalDirection::WEST().turn_left().turn_right());
+    EXPECT_EQ(CardinalDirection::WEST(), CardinalDirection::WEST().turn_around().turn_around());
+}
