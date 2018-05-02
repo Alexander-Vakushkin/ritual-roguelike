@@ -7,7 +7,7 @@ include_directories(${Gtest_INCLUDE_DIR})
 
 set(MAIN_SOURCE main.cpp)
 
-file(GLOB TEST_SOURCES  helpers/direction_tests.h)
+file(GLOB TEST_SOURCES  *.h **/*.h)
 
 add_executable(tests ${MAIN_SOURCE} ${TEST_SOURCES})
 target_link_libraries(tests ${Gtest_LIBS})

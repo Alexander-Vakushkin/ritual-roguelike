@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "helpers/direction_tests.h"
+#include "room_tests.h"
 
 int main(int argc, char** argv)
 {
