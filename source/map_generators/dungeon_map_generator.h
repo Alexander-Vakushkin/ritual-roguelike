@@ -29,8 +29,14 @@ struct Room
             return other.is_overlapping(*this);
         }
 
-        return contains(other.upperLeftX, other.upperLeftY)
-            || contains(other.upperLeftX, other.upperLeftY + other.height);
+        for(size_t y = other.upperLeftY; y <= other.upperLeftY + other.height; ++y)
+        {
+            if(contains(other.upperLeftX, y))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
 };
