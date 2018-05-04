@@ -44,8 +44,14 @@ TEST(RoomTests, OverlapsReturnsTrueForRoomsSharingABorder)
     EXPECT_TRUE(r.is_overlapping({3,0,5,5}));
 }
 
-TEST(RoomTests, OVerlapsReturnsTrueForRoomsSharingACorner)
+TEST(RoomTests, OverlapsReturnsTrueForRoomsSharingACorner)
 {
     Room r{0,0,3,4};
     EXPECT_TRUE(r.is_overlapping({3,4,5,5}));
+}
+
+TEST(RoomTests, OverlapsReturnsTrueWhenTwoRoomsFormACross)
+{
+    Room r{2,2,10,10};
+    EXPECT_TRUE(r.is_overlapping({5,0,3,20}));
 }
