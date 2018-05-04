@@ -3,44 +3,38 @@
 #include <tile.h>
 #include <libtcod.hpp>
 #include <iostream>
+#include <vector>
+#include <algorithm>
 
 std::unique_ptr<IMap> DungeonMapGenerator::generate(size_t height, size_t width) const
 {
     std::unique_ptr<IMap> result = std::make_unique<Map>(height, width);
     std::unique_ptr<TCODRandom> rng = std::make_unique<TCODRandom>();
 
-    int nMainCorridors = rng->getInt(6, 10);
-    int x = rng->getInt(0, result->width()-1);
-    int y = rng->getInt(0, result->height()-1);
-    int direction = rng->getInt(0, 3);
+    size_t nRooms = rng->getInt(6, 8);
 
-    for(int i = 0; i < nMainCorridors; ++i)
+    std::vector<Room> rooms;
+    while(rooms.size() < nRooms)
     {
-        std::cout << "DIRECTION: " << direction << std::endl;
-        size_t corridorLength = rng->getInt(10, 15);
-        for(size_t j = 0; j < corridorLength; ++j)
+        Room newRoomCandidate = Room{    rng->getInt(0, width - 10)
+                                        ,rng->getInt(0, height - 10)
+                                        ,rng->getInt(6, 11)
+                                        ,rng->getInt(6, 11)};
+        if(! std::any_of(rooms.begin(), rooms.end(), [&newRoomCandidate] (const Room& r) { return r.is_overlapping(newRoomCandidate); }))
         {
-            result->get_tile(y, x) = Tile::FLOOR;
+            rooms.push_back(newRoomCandidate);
+        }
+    }
 
-            int d = direction / 2, m = direction % 2;
-            int newX = x + m * (1 - 2*d);
-            int newY = y + (1-m) * (1 - 2*d);
-
-            std::cout << x << " " << y << std::endl;
-
-            if(newX < 0 || newY < 0 || newX >= result->width() || newY >= result->height())
+    for(const Room& r : rooms)
+    {
+        for(size_t x = r.upperLeftX+1; x < r.upperLeftX + r.width; ++x)
+        {
+            for(size_t y = r.upperLeftY+1; y < r.upperLeftY + r.height; ++y)
             {
-                break;
-            }
-            else
-            {
-                x = newX;
-                y = newY;
+                result->get_tile(y, x) = Tile::FLOOR;
             }
         }
-
-        direction = (4 + direction + (1 - 2 * rng->getInt(0, 1))) % 4;
-
     }
 
     return std::move(result);
